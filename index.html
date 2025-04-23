@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/src/assets/images/logo-RSAB-2.png" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Antrian</title>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.jsx"></script>
+    <script>
+      const ws = new WebSocket(`ws://172.16.44.42:8182`);
+        ws.addEventListener("message", function(event) {
+            const data = JSON.parse(event.data);
+            if (data.type === "message") {
+              let id = data.data.id;
+              let path = location.pathname.slice(6,8);
+              if(path==id){
+                console.log(data);
+                location.reload();
+              }else{
+                console.log('data false');
+              }              
+            }
+        });
+    </script>
+  </body>
+</html>
+
